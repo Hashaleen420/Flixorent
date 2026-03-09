@@ -36,10 +36,9 @@ Sideload the APK onto your device.
 
 Log in with your API key and enjoy!
 
-🔑 For Best Experience (Premium)
-Link your Debrid account in Settings for instant 4K/1080p streaming without waiting for seeds.
-
-Supported: Real-Debrid, AllDebrid, Premiumize (BETA), TorBox.
+### 🔑 For the Best Experience (Requires 3rd-Party Debrid Account)
+Link your personal Debrid account in Settings for instant 4K/1080p streaming without waiting for seeds. Flixorent is 100% free, but Debrid providers are paid third-party services.
+ **Supported:** Real-Debrid, AllDebrid, Premiumize (BETA), TorBox.
 
 
 💙 Support the Project
@@ -53,11 +52,11 @@ If you find the app useful, support development by using my referral links. This
 ⚡ Core Streaming Engine
 Zero-Setup Scraping: Built-in integration with Torrentio. No external add-ons, repositories, or configuration required—just click and play.
 
-Hybrid "Free & Premium" System:
+ **Hybrid Streaming Engine:**
+  
+  Debrid Mode (Requires your own Debrid sub): Unlocks high-speed, buffer-free streaming using your linked Real-Debrid, TorBox, or AllDebrid account.
 
-Premium Mode: Unlocks high-speed, buffer-free streaming using Debrid services.
-
-Free Mode: Finds peers to play in app and download file, upon exiting the file is deleted straight away keeping your device storage from being full.
+  Direct Mode (100% Free): Finds P2P peers to play directly in the app. Files are deleted immediately upon exiting to save your device storage.
 
 Multi-Provider Support: Secured locally on user device
 Native API integration for:
