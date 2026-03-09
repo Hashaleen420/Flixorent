@@ -1,11 +1,11 @@
-🎬 Flixorent
+# 🎬 Flixorent
 A modern, native Android application for streaming movies and TV shows.
 
 Flixorent is a lightweight, "plug-and-play" alternative to complex streaming setups. Built entirely in native Kotlin, it leverages the TMDB API for rich metadata and integrates directly with Torrentio to provide high-quality streams without the need for external add-ons or configuration.
 
 Whether you are a power user with a Debrid account or a free user looking for a solid torrenting experience, Flixtorrent handles it all with a unified, Netflix-style interface.
 
-🚀 Key Features
+### **🚀 Key Features**
 ☁️ Universal Debrid Support: Full integration for Real-Debrid, TorBox, and AllDebrid.
 
 💎 Premiumize (BETA): Experimental support for Premiumize accounts.
@@ -27,7 +27,7 @@ External Players: Prefer VLC, MX Player, or JustPlayer? Launch your content in a
 
 Debrid vs. Direct: Choose between high-speed Debrid streaming or traditional methods based on your preference.
 
-📥 Installation
+### **📥 Installation**
 Go to the Latest Releases Page.
 
 Download the latest apk file.
@@ -41,7 +41,7 @@ Link your personal Debrid account in Settings for instant 4K/1080p streaming wit
  **Supported:** Real-Debrid, AllDebrid, Premiumize (BETA), TorBox.
 
 
-💙 Support the Project
+## **💙 Support the Project**
 If you find the app useful, support development by using my referral links. This helps me keep premium accounts active for testing and debugging:
 
 [Get TorBox (Bonus Days For Both of Us!)](https://torbox.app/subscription?referral=46a9012c-348a-405c-9b3a-52a9d834231e)
@@ -49,7 +49,7 @@ If you find the app useful, support development by using my referral links. This
 [Get Real-Debrid](http://real-debrid.com/?id=13695804)
 
 
-⚡ Core Streaming Engine
+### **⚡ Core Streaming Engine**
 Zero-Setup Scraping: Built-in integration with Torrentio. No external add-ons, repositories, or configuration required—just click and play.
 
  **Hybrid Streaming Engine:**
@@ -72,13 +72,13 @@ TorBox
 Smart Source Sorting: Automatically ranks links by resolution (4K > 1080p > 720p) and seed count.
 
 
-📱 Requirements
+### **📱 Requirements**
 Android Version: Android 8.0 (Oreo) or higher.
 
 TV Support: Compatible with FireStick, Google TV, and Shield TV.
 
 
-🤝 Credits & Disclaimer
+#### **🤝 Credits & Disclaimer**
 Data: Metadata provided by TMDB.
 
 Player: Built using AndroidX Media3 & FFmpeg.
