@@ -85,3 +85,20 @@ Data: Metadata provided by TMDB.
 Player: Built using AndroidX Media3 & FFmpeg.
 
 Disclaimer: This application is for educational purposes only. The developer does not host any content. The app acts solely as a client to scrape publicly available data.
+
+
+### 📸 App Screenshots
+
+<details>
+  <summary><b>👉 Click here to view the interface</b></summary>
+  <br>
+  
+  <img src="https://github.com/user-attachments/assets/03d10beb-5816-474f-ba80-96abdad599b1" width="220">
+  <img src="https://github.com/user-attachments/assets/9a12660a-a034-4241-8baf-ed785ed1a044" width="220">
+  <img src="https://github.com/user-attachments/assets/384fd03b-9989-457d-9403-4afbb0a01cab" width="220">
+  <img src="https://github.com/user-attachments/assets/2edb5f9b-78ca-43a3-922c-7f49542ebda0" width="220">
+  <img src="https://github.com/user-attachments/assets/35cfd0e2-f5b6-44af-8f58-923a0ed93a79" width="220">
+  <img src="https://github.com/user-attachments/assets/966ab2ba-1c53-4982-9bcd-c851358235e1" width="220">
+  <img src="https://github.com/user-attachments/assets/97003464-8086-46ba-ab60-615a38ea4e9a" width="220">
+
+</details>
