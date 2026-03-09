@@ -30,7 +30,7 @@ Debrid vs. Direct: Choose between high-speed Debrid streaming or traditional met
 ### **📥 Installation**
 Go to the Latest Releases Page.
 
-Download the latest apk file.
+[Download Latest Release](https://github.com/Hashaleen420/Flixorent/releases/latest)
 
 Sideload the APK onto your device.
 
