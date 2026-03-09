@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#141414">
+
+    <!-- State A: Not Logged In -->
+    <LinearLayout
+        android:id="@+id/layout_disconnected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@android:drawable/ic_menu_upload_you_tube"
+            app:tint="#444444" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="Connect Trakt to sync your history, watchlist, and progress."
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_connect_trakt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#E50914"
+            android:text="Connect in Settings"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <!-- State B: Logged In -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/layout_connected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="16dp">
+
+            <!-- Up Next -->
+            <include
+                android:id="@+id/section_up_next"
+                layout="@layout/item_category" />
+
+            <!-- Upcoming Schedule -->
+            <include
+                android:id="@+id/section_upcoming"
+                layout="@layout/item_category" />
+
+            <!-- Watchlist Movies -->
+            <include
+                android:id="@+id/section_watchlist_movies"
+                layout="@layout/item_category" />
+
+            <!-- Watchlist Shows -->
+            <include
+                android:id="@+id/section_watchlist_shows"
+                layout="@layout/item_category" />
+
+            <!-- Recently Watched -->
+            <include
+                android:id="@+id/section_history"
+                layout="@layout/item_category" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</FrameLayout>

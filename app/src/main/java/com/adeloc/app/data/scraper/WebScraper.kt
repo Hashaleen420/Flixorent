@@ -2,14 +2,13 @@ package com.adeloc.app.data.scraper
 
 import android.util.Log
 import com.adeloc.app.data.model.StreamSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
 import java.net.URLEncoder
+import java.net.UnknownHostException
+import java.net.SocketTimeoutException
 
 object WebScraper {
 
@@ -18,21 +17,20 @@ object WebScraper {
             val encodedQuery = URLEncoder.encode(query, "UTF-8")
             val results = mutableListOf<StreamSource>()
 
-            Log.d("WebScraper", "Asking APIs for: $query")
+            Log.d("WebScraper", "Starting HIGH-SPEED Parallel Scrape for: $query")
 
-            // 1. ThePirateBay API (APIBay)
-            val jobTPB = async { fetchThePirateBay(encodedQuery, query) }
+            // PARALLEL EXECUTION: Launch every provider independently
+            val scrapers = listOf(
+                async { fetchProvider("TPB", 5000L) { fetchThePirateBay(encodedQuery, query) } },
+                async { fetchProvider("YTS", 5000L) { fetchYTS(encodedQuery, query) } }
+                // Add more providers here as async blocks
+            )
 
-            // 2. YTS API (Movies only)
-            val jobYTS = async { fetchYTS(encodedQuery, query) }
+            // Gather all that finished within 5s
+            scrapers.awaitAll().filterNotNull().forEach { results.addAll(it) }
 
-            // Wait for both
-            val allResults = awaitAll(jobTPB, jobYTS)
-
-            allResults.forEach { results.addAll(it) }
-
-            // Sort: High seeds on top
-            return@withContext results.sortedByDescending {
+            // Final Sort
+            results.sortedByDescending {
                 try {
                     it.quality.substringAfter("S:").substringBefore("|").trim().toInt()
                 } catch (e: Exception) { 0 }
@@ -40,7 +38,23 @@ object WebScraper {
         }
     }
 
-    // --- 1. THE PIRATE BAY (via APIBay) ---
+    private suspend fun fetchProvider(name: String, timeout: Long, block: () -> List<StreamSource>): List<StreamSource>? {
+        return try {
+            withTimeoutOrNull(timeout) {
+                block()
+            }
+        } catch (e: UnknownHostException) {
+            Log.e("WebScraper", "$name: DNS Error")
+            null
+        } catch (e: SocketTimeoutException) {
+            Log.e("WebScraper", "$name: Connection Timeout")
+            null
+        } catch (e: Exception) {
+            Log.e("WebScraper", "$name: Error ${e.message}")
+            null
+        }
+    }
+
     private fun fetchThePirateBay(encodedQuery: String, originalQuery: String): List<StreamSource> {
         val sources = mutableListOf<StreamSource>()
         try {
@@ -55,9 +69,7 @@ object WebScraper {
                 val sizeBytes = item.getString("size").toLong()
                 val infoHash = item.getString("info_hash")
 
-                // FILTER
                 if (!isRelevant(name, originalQuery)) continue
-
                 if (seeds == 0 || infoHash == "0000000000000000000000000000000000000000") continue
 
                 val magnet = "magnet:?xt=urn:btih:$infoHash&dn=${URLEncoder.encode(name, "UTF-8")}"
@@ -65,13 +77,10 @@ object WebScraper {
 
                 sources.add(StreamSource(name, magnet, "TPB | S:$seeds | $sizeGB", true))
             }
-        } catch (e: Exception) {
-            Log.e("WebScraper", "TPB Error: ${e.message}")
-        }
+        } catch (e: Exception) { throw e }
         return sources
     }
 
-    // --- 2. YTS OFFICIAL API ---
     private fun fetchYTS(encodedQuery: String, originalQuery: String): List<StreamSource> {
         val sources = mutableListOf<StreamSource>()
         try {
@@ -86,7 +95,6 @@ object WebScraper {
                     val movie = movies.getJSONObject(i)
                     val title = movie.getString("title")
 
-                    // FILTER
                     if (!isRelevant(title, originalQuery)) continue
 
                     val year = movie.getInt("year")
@@ -100,21 +108,17 @@ object WebScraper {
                         val hash = torrent.getString("hash")
 
                         val magnet = "magnet:?xt=urn:btih:$hash&dn=${URLEncoder.encode(title, "UTF-8")}"
-
-                        sources.add(StreamSource("$title ($year)", magnet, "YTS | $quality | S:$seeds | $size", true))                    }
+                        sources.add(StreamSource("$title ($year)", magnet, "YTS | $quality | S:$seeds | $size", true))
+                    }
                 }
             }
-        } catch (e: Exception) {
-            Log.e("WebScraper", "YTS Error: ${e.message}")
-        }
+        } catch (e: Exception) { throw e }
         return sources
     }
 
-    // --- SMART FILTER ---
     private fun isRelevant(resultTitle: String, query: String): Boolean {
         val cleanResult = resultTitle.lowercase()
         val cleanQuery = query.lowercase().replace(Regex("[^a-z0-9 ]"), "")
-
         val queryWords = cleanQuery.split(" ").filter { it.length > 1 }
         val stopWords = listOf("the", "and", "or", "of", "in", "a", "an", "movie", "film", "series")
 
@@ -124,18 +128,12 @@ object WebScraper {
         for (word in queryWords) {
             if (word !in stopWords) {
                 significantWords++
-                // \b ensures we match "Rip" but NOT "Triple"
                 val regex = "\\b$word\\b".toRegex()
                 if (regex.containsMatchIn(cleanResult)) {
                     matches++
                 }
             }
         }
-
-        return if (significantWords > 0) {
-            matches > 0
-        } else {
-            true
-        }
+        return if (significantWords > 0) matches > 0 else true
     }
 }

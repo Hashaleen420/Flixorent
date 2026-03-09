@@ -2,6 +2,7 @@
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,15 +21,22 @@
             android:textStyle="bold"
             android:textSize="24sp"
             android:padding="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/bg_toolbar_focus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView
             android:id="@+id/settingsBtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginEnd="16dp"
+            android:padding="8dp"
             android:src="@android:drawable/ic_menu_preferences"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@drawable/bg_toolbar_focus"
             app:tint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/appLogo"
             app:layout_constraintEnd_toEndOf="parent"
@@ -36,10 +44,14 @@
 
         <ImageView
             android:id="@+id/searchBtn"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="16dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
             android:src="@android:drawable/ic_menu_search"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@drawable/bg_toolbar_focus"
             app:tint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@id/appLogo"
             app:layout_constraintEnd_toStartOf="@id/settingsBtn"
@@ -50,23 +62,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:queryHint="Search..."
+            app:queryHint="@string/search_hint"
             app:iconifiedByDefault="false"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:layout_constraintTop_toBottomOf="@id/appLogo"/>
+
+        <!-- SHIMMER LOADING -->
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <include layout="@layout/layout_shimmer_home" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@id/searchView"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/mainRecycler"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/homeScroll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="10dp"/>
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- HERO CAROUSEL -->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/heroViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp" />
+
+                    <!-- UP NEXT SECTION -->
+                    <LinearLayout
+                        android:id="@+id/layout_up_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        android:paddingTop="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Up Next to Watch"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_up_next"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:paddingTop="8dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:clipToPadding="false"/>
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mainRecycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingTop="10dp"/>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

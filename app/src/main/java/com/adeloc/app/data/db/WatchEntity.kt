@@ -7,11 +7,12 @@ import androidx.room.PrimaryKey
 data class WatchEntity(
     @PrimaryKey val tmdbId: Int,
     val title: String,
-    val posterPath: String,
+    val posterPath: String?,
     val timestamp: Long,
-    val position: Long = 0,
-    val duration: Long = 0,
-    // NEW: Remembers the link you chose
-    val lastUrl: String = "",
-    val lastQuality: String = ""
+    val position: Long,
+    val duration: Long,
+    val lastUrl: String,
+    val lastQuality: String,
+    val isFavorite: Boolean = false,
+    val mediaType: String? = "movie" // "movie" or "tv"
 )

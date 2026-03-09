@@ -13,19 +13,158 @@
         app:show_subtitle_button="true"
         app:show_buffering="when_playing"
         app:keep_content_on_player_reset="true"
+        app:use_controller="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- MODERN GESTURE CONTROLS OVERLAY -->
+    <FrameLayout
+        android:id="@+id/gestureControlsOverlay"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/bg_circle_overlay"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/layout_volume_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/volumeIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_volume_medium"
+                app:tint="#FFFFFF" />
+            <TextView
+                android:id="@+id/volumeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="50%" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_brightness_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/brightnessIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_brightness_medium"
+                app:tint="#FFFFFF" />
+            <TextView
+                android:id="@+id/brightnessText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="50%" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_seek_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone">
+            <ImageView
+                android:id="@+id/seekIcon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_forward_10"
+                app:tint="#FFFFFF" />
+            <TextView
+                android:id="@+id/seekText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="00:00" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- TORRENT BUFFERING OVERLAY -->
+    <LinearLayout
+        android:id="@+id/torrentLoadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E6000000"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/torrentLoadingAnimation"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            app:lottie_rawRes="@raw/loading_text"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true" />
+
+        <TextView
+            android:id="@+id/torrentStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Finding Peers..."
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/torrentPercentText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0%"
+            android:textColor="#E50914"
+            android:textSize="16sp" />
+    </LinearLayout>
+
     <ProgressBar
         android:id="@+id/loadingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:visibility="gone"
+        android:indeterminateTint="#E50914"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnimation"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+        app:lottie_rawRes="@raw/loading_text"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/infoText"
@@ -37,24 +176,46 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <Button
-        android:id="@+id/downloadBtn"
+    <LinearLayout
+        android:id="@+id/topControls"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sources"
-        android:backgroundTint="#E50914"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_margin="16dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <androidx.mediarouter.app.MediaRouteButton
-        android:id="@+id/mediaRouteButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:visibility="visible"
-        app:mediaRouteButtonTint="#FFFFFF"
-        app:layout_constraintTop_toTopOf="parent"
+        <androidx.mediarouter.app.MediaRouteButton
+            android:id="@+id/mediaRouteButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:mediaRouteButtonTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/downloadBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sources"
+            android:textAllCaps="false"
+            android:backgroundTint="#E50914" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/nextEpisodeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="80dp"
+        android:backgroundTint="#E50914"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="Next Episode"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:visibility="gone"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

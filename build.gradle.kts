@@ -1,6 +1,5 @@
 plugins {
-    id("com.android.application") version "8.2.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.22" apply false
-    // ADD THIS LINE BELOW
-    id("com.google.devtools.ksp") version "1.9.22-1.0.17" apply false
+    id("com.android.application") version "8.5.1" apply false
+    id("org.jetbrains.kotlin.android") version "2.0.21" apply false
+    id("com.google.devtools.ksp") version "2.0.21-1.0.25" apply false
 }

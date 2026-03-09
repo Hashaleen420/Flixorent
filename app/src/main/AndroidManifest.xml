@@ -2,16 +2,51 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="magnet" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="video/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="http" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:banner="@drawable/tv_banner"
         android:label="Flixorent"
-        android:theme="@style/Theme.Material3.Dark.NoActionBar"
+        android:theme="@style/Theme.Flixtorrent"
         android:hardwareAccelerated="true"
         android:usesCleartextTraffic="true">
 
@@ -19,20 +54,54 @@
             android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
             android:value="com.adeloc.app.data.api.CastOptionsProvider" />
 
-        <activity android:name=".ui.SettingsActivity" />
-
-        <activity android:name=".ui.MainActivity" android:exported="true"
-            android:configChanges="orientation|screenSize">
+        <activity android:name=".ui.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Flixtorrent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.SettingsActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter android:label="Trakt Auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="flixorent"
+                    android:host="auth"
+                    android:path="/trakt" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".ui.DetailsActivity" />
+
+        <activity android:name=".ui.MainActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+
         <activity android:name=".ui.PlayerActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout"
             android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Material3.Dark.NoActionBar" />
+            android:theme="@style/Theme.Material3.Dark.NoActionBar"
+            android:exported="false" />
+
+        <activity android:name=".ui.DownloadsActivity"
+            android:theme="@style/Theme.Flixtorrent" />
+
+        <service
+            android:name=".service.TorrentService"
+            android:foregroundServiceType="dataSync"
+            android:exported="false" />
+
+        <service
+            android:name="com.tonyodev.fetch2.FetchService"
+            android:exported="false" />
+
     </application>
 </manifest>

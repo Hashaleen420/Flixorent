@@ -5,11 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-// VERSION 3 (Wipes old data to prevent crash)
-@Database(entities = [WatchEntity::class], version = 3, exportSchema = false)
+@Database(entities = [WatchEntity::class, DownloadedMedia::class, WatchHistoryItem::class], version = 8, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
+    abstract fun downloadsDao(): DownloadsDao
+    abstract fun watchHistoryDao(): WatchHistoryDao
 
     companion object {
         @Volatile
@@ -22,7 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "flixorent_db"
                 )
-                    .fallbackToDestructiveMigration() // Important!
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

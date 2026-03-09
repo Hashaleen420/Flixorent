@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/nav_home" android:title="Home" android:icon="@android:drawable/ic_menu_compass"/>
-    <item android:id="@+id/nav_movies" android:title="Movies" android:icon="@android:drawable/ic_media_play"/>
-    <item android:id="@+id/nav_tv" android:title="TV Shows" android:icon="@android:drawable/ic_menu_slideshow"/>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_movies"
+            android:icon="@android:drawable/ic_media_play"
+            android:title="@string/nav_movies" />
+        <item
+            android:id="@+id/nav_tv"
+            android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="@string/nav_tv" />
+        <item
+            android:id="@+id/nav_anime"
+            android:icon="@android:drawable/ic_menu_gallery"
+            android:title="@string/nav_anime" />
+    </group>
+
+    <item android:title="@string/personal">
+        <menu>
+            <item
+                android:id="@+id/nav_downloads"
+                android:icon="@android:drawable/stat_sys_download_done"
+                android:title="Downloads" />
+            <item
+                android:id="@+id/nav_trakt_sync"
+                android:icon="@drawable/ic_dashboard"
+                android:title="Trakt Dashboard" />
+            <item
+                android:id="@+id/nav_history"
+                android:icon="@android:drawable/ic_menu_recent_history"
+                android:title="@string/nav_history" />
+            <item
+                android:id="@+id/nav_lib_movies"
+                android:icon="@android:drawable/btn_star_big_on"
+                android:title="@string/nav_lib_movies" />
+            <item
+                android:id="@+id/nav_lib_tv"
+                android:icon="@android:drawable/btn_star_big_on"
+                android:title="@string/nav_lib_tv" />
+        </menu>
+    </item>
 </menu>
