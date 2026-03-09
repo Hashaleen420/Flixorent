@@ -16,7 +16,7 @@ Whether you are a power user with a Debrid account or a free user looking for a 
 
 📺 Android TV & Chromecast: Fully optimized for TV D-pads and built-in casting support for the big screen.
 
-🌍 Multi-Language: Native support for English and Spanish.
+🌍 Multi-Language: Native support for English, Spanish, French, German, Italian, Arabic, Russian and Portuguese. 
 
 🎮 Play Your Way
 Flixorent puts the choice in the user's hands. You aren't locked into one way of watching:
